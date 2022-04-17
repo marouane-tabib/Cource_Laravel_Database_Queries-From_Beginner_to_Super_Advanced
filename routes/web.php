@@ -14,21 +14,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    // DB::transaction(function () {
-    //     DB::table('users')->where('id' , 32)->delete();
-    //     $result = DB::table('users')->where('id',4)->update(['name' => 'none']);
-    //     dump('result' , $result);
-    // }, 3);
 
+    // just make factory data but not insert to database 
+    //dump(factory(App\Comment::class , 3)->make());
 
-    DB::transaction(function () {
-        DB::update('update users set name = 11');
-     
-        DB::delete('delete from users where id=32');
-    });
-
-
-
-    //DB::table('users')->insert(['name' => 'mike' , 'email' => 'mike@ff.ff' , 'password' => 'password123']);
+    // make data factory data and insert to database
+    dump(factory(App\Comment::class , 3)->create());
+    
     return view('welcome');
 });
