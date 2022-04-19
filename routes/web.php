@@ -14,44 +14,30 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    //(-- Select all columns in users table --)
-    // $users = DB::table('users')->get();
 
-    // (-- Select just email column in users table --)
-    // $users = DB::table('users')->pluck('email');
+    // $result = DB::table('rooms')->get();
+    // $result = DB::table('rooms')->where('price','<',200)->get(); // = like, etc.
 
-    // (-- Select the first value with name 'Mrs. Odie metz' --)
-    // $user = DB::table('users')->where('name', 'Mrs. Odie Metz')->first();
+    // $result = DB::table('rooms')->where([
+    //     ['room_size', '2'],
+    //     ['price', '<', '400'],
+    // ])->get();
 
-    // (-- Select just email column in users table with name 'Mrs. Odie Metz' --)
-    // $user = DB::table('users')->where('name', 'Mrs. Odie Metz')->value('email');
+    //  $result = DB::table('rooms')
+    //     ->where('room_size' ,'2')
+    //     ->orWhere('price', '<' ,'400')
+    //     ->get();
 
-    // (-- Select user with id = 1 , in users table --)
-    // $user = DB::table('users')->find(1);
+    $result = DB::table('rooms')
+            ->where('price', '<' ,'400')
+            ->orWhere(function($query) {
+                $query->where('room_size', '>' ,'1')
+                      ->where('room_size', '<' ,'4');
+            })
+            ->get();
 
+    dump($result);
 
-    // i'm search how to use this queary
-    // $comments= DB::table('comments')->select('content as comment_content')->get();
-
-    // (-- Select just user_id distinct value in comments table --)
-    // $comments= DB::table('comments')->select('user_id')->distinct()->get();
-
-
-    // (-- For count how many column or result in this table or request --)
-    // $result = DB::table('comments')->count();
-
-    // (-- For get user_id greatst value in comments table --)
-    // $result = DB::table('comments')->max('user_id');
-
-    // (-- For claculate user_id value in comments table --)
-    // $result = DB::table('comments')->sum('user_id');
-    // min, avg
-
-
-    // (-- For check if Exist there a result with this select query in comments table --)
-    // $result = DB::table('comments')->where('content', 'content')->exists();
-    // (-- For check if DoesntExist there a result with this select query in comments table --)
-    $result = DB::table('comments')->where('content', 'content')->doesntExist();
-    dump('result' , $result);
+    
     return view('welcome');
 });
