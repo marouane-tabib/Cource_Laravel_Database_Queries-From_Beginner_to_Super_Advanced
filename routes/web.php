@@ -14,10 +14,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    
-    $result = DB::table('comments')
-    //->paginate(3);
-    ->simplePaginate(3);
+    //$result = DB::statement('ALTER TABLE comments ADD FULLTEXT fulltext_index(content)');
+    //$result = DB::table('comments')->whereRaw('MATCH(content) AGAINST (? IN BOOLEAN MODE)' , ['Rerum'])->get();
+    //$result = DB::table('comments')->where('content' , 'like' , '%Rerum%')->get();
+    $result = DB::table('comments')->whereRaw('MATCH(content) AGAINST (? IN BOOLEAN MODE)' , ['+Rerum -corporis'])->get();
 
     dump($result);
 
