@@ -14,12 +14,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    // select all data in users table
-    $result = DB::table('users')
-    // with Array
-    //->whereJsonContains('meta->skills' , 'laravel')
-    ->where('meta->setting->site_language' , 'en')
-    ->get();
+    
+    $result = DB::table('comments')
+    //->paginate(3);
+    ->simplePaginate(3);
 
     dump($result);
 
