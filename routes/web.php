@@ -16,39 +16,44 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
 
 
-    // $result = DB::table('users')
-    //             ->orderBy('name', 'desc')
+    // $room_id = null;
+
+    // $result = DB::table('reservations')
+    //             ->when($room_id, function($query, $room_id) {
+    //                  return $query->where('room_id', $room_id);
+    //             })
     //             ->get();
 
-    // $result = DB::table('users')
-    //             ->latest() // created_at default
-    //             ->first();
-                
-    // $result = DB::table('users')
-    //             // ->inRandomOrder()
-    //             ->orderByRaw('RAND()')
-    //             ->first();
 
-    // $result = DB::table('comments')
-    //             ->selectRaw('count(id) as number_of_5stars_comments, rating')
-    //             ->groupBy('rating')
-    //             ->having('rating', '=', 5)
-    //             ->get();
+    // $sortBy = null;
 
-    // $result = DB::table('comments')
-    //             ->skip(5)
-    //             ->take(5)
-    //             ->get();
+    // $result = DB::table('rooms')
+    //                 ->when($sortBy, function ($query, $sortBy) {
+    //                     return $query->orderBy($sortBy);
+    //                 }, function ($query) {
+    //                     return $query->orderBy('price');
+    //                 })
+    //                 ->get();
 
-    $result = DB::table('comments')
-                ->offset(5)
-                ->limit(5)
-                ->get();
+    // $result = DB::table('comments')->orderBy('id')->chunk(2, function ($comments) {
+    //     foreach ($comments as $comment)
+    //     {
+    //         if($comment->id == 5) return false;
+    //     }
+    // });
+
+    // $result = DB::table('comments')->orderBy('id')->chunkById(5, function ($comments) {
+    //     foreach ($comments as $comment)
+    //     {
+    //        DB::table('comments')
+    //             ->where('id', $comment->id)
+    //             ->update(['rating' => null]);
+    //     }
+    // }); // useful for administration tasks
+
+    $result = DB::table('comments')->get();
 
     dump($result);
-                
-    dump($result);
-
 
     
     return view('welcome');
