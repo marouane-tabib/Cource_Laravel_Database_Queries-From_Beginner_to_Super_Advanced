@@ -16,16 +16,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 
- 
-    // $result = DB::table('users')
-    //             ->whereJsonContains('meta->skills', 'Laravel')
-    //             ->get();
 
-    $result = DB::table('users')
-                ->where('meta->settings->site_language', 'en')
-                ->get();
-
-    dump($result);
+    return $result = DB::table('comments')->paginate(3); // other statements like where clause are also possible
+    // simplePaginate(3);
+                
+    dump($result->items());
 
     return view('welcome');
 });
