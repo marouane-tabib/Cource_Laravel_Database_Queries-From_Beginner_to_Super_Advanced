@@ -17,10 +17,18 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
 
 
-    return $result = DB::table('comments')->paginate(3); // other statements like where clause are also possible
-    // simplePaginate(3);
-                
-    dump($result->items());
+    // $result = DB::statement('ALTER TABLE comments ADD FULLTEXT fulltext_index(content)'); // MySQL >= 5.6
+    // $result = DB::table('comments')
+    //     ->whereRaw("MATCH(content) AGAINST(? IN BOOLEAN MODE)", ['inventore'])
+    //     ->get();
+
+    // $result = DB::table('comments')->whereRaw("MATCH(content)AGAINST(? IN BOOLEAN MODE)",['+reppllendus - pariatur'])->get();
+
+    $result = DB::table('comments')
+    ->where("content", 'like', '%inventore%')
+    ->get();
+
+    dump($result);
 
     return view('welcome');
 });
