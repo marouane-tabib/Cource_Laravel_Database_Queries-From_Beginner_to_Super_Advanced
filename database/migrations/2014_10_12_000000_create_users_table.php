@@ -33,6 +33,6 @@ class CreateUsersTable extends Migration
     public function down()
     {
         Schema::dropIfExists('users');
-        Schema::connection('sqlite')->dropIfExists('users');
     }
 }
+
