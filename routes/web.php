@@ -16,19 +16,22 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 
-    // DB::table('rooms')->insert([
-    // ['room_number' => 1, 'room_size' => 1, 'price' =>1, 'description' => 'new description 1'],
-    // ['room_number' => 2, 'room_size' => 2, 'price' =>2, 'description' => 'new description 2']
-    // ]);
+    // $affected = DB::table('rooms')
+    //           ->where('id', 1)
+    //           ->update(['price' => 222]);
 
-    $id = DB::table('rooms')->insertGetId(
-    ['room_number' => 3, 'room_size' => 3, 'price' =>3, 'description' => 'new description 3'],
-    );
+
+    // $affected = DB::table('users')
+    //           ->where('id', 1)
+    //           ->update(['meta->settings->site_language' => 'es']);
+
+    // $affected = DB::table('rooms')->increment('price', 20);
+    $affected = DB::table('rooms')->decrement('price', 10, ['description' => 'new description']);
 
     $result = DB::table('rooms')
                 ->get();
 
-    dump($result, $id);
+    dump($result, $affected);
 
     return view('welcome');
 });
