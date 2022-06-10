@@ -16,30 +16,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 
-    // $users = DB::table('users')
-    //         ->select('name');
+    // DB::table('rooms')->insert([
+    // ['room_number' => 1, 'room_size' => 1, 'price' =>1, 'description' => 'new description 1'],
+    // ['room_number' => 2, 'room_size' => 2, 'price' =>2, 'description' => 'new description 2']
+    // ]);
 
-    // $result = DB::table('cities')
-    //         ->select('name')
-    //         ->union($users)
-    //         ->get();
+    $id = DB::table('rooms')->insertGetId(
+    ['room_number' => 3, 'room_size' => 3, 'price' =>3, 'description' => 'new description 3'],
+    );
 
-    $room = DB::table('comments')
-            ->select('rating as rating_or_room_id','id', DB::raw('"comments" as type_of_activity'))
-            ->where('user_id',2);
+    $result = DB::table('rooms')
+                ->get();
 
-    $result = DB::table('reservations')
-            ->select('room_id as rating_or_room_id', 'id', DB::raw('"reservation" as type_of_activity'))
-            ->union($room)
-            ->where('user_id',2)
-            ->get();
-
-
-    dump($result);
+    dump($result, $id);
 
     return view('welcome');
 });
-
-// order_id  | client_id | order_date | order_amount
-
-// refund_id  | client_id | refund_date |  refund_amount 
