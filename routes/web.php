@@ -16,15 +16,17 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 
-    // DB::table('rooms')->where('id', '>', 10)->delete();
-    // DB::table('rooms')->delete();
-    // DB::table('rooms')->insert(['room_number'=>1, 'room_size'=>2, 'price'=>100, 'description'=>'desc']);
-    // DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-    // DB::table('rooms')->truncate();
-    // DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+    // $result = DB::table('rooms')
+    //             ->sharedLock() // If you query for something and later want to update/insert related data (within transaction). Other sessions can read, but cannot  modify
+    //             ->find(1);
 
     $result = DB::table('rooms')
-                ->get();
+                ->where('room_size',3)
+                ->lockForUpdate() //  Other sessions cannot read, cannot  modify
+                ->get()
+                // ->dd()
+                // ->dump()
+                ;
 
     dump($result);
 
