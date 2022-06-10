@@ -1,5 +1,8 @@
 <?php
 
+use App\Comment;
+use App\Reservation;
+use App\Room;
 use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -16,19 +19,43 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 
+
     // $result = DB::table('rooms')
-    //             ->sharedLock() // If you query for something and later want to update/insert related data (within transaction). Other sessions can read, but cannot  modify
-    //             ->find(1);
+    //             ->where('room_size',3)
+    //             ->get();
 
-    $result = DB::table('rooms')
-                ->where('room_size',3)
-                ->lockForUpdate() //  Other sessions cannot read, cannot  modify
-                ->get()
-                // ->dd()
-                // ->dump()
-                ;
+    // $result = Room::where('room_size',3)
+    //             ->get();
 
-    dump($result);
+    // $result = Room::get(); // all()
+    // $result = Room::where('price', '<', 400)
+    //                 ->get();
+
+    // $result = User::select('name','email')
+    //     ->addSelect(['worst_rating' => Comment::select('rating')
+    //     ->whereColumn('user_id', 'users.id')
+    //     ->orderBy('rating', 'asc')
+    //     ->limit(1)
+    //     ])->get()->toArray();
+
+    // $result = User::orderByDesc(  // asc default without 'Desc' part
+    //     Reservation::select('check_in')
+    //         ->whereColumn('user_id','users.id')
+    //         ->orderBy('check_in','desc') // asc default without argument
+    //         ->limit(1)
+    //     )->select('id','name')->get()->toArray();
+
+    $result = Reservation::chunk(2, function ($reservations) {
+        foreach ($reservations as $reservation) {
+            echo $reservation->id;
+        }
+    }); // uses less memory than get() and cursor() but takes longer than get() and cursor(), the bigger chunk set is the less time a query takes but memory usage increases
+
+    // foreach (Room::cursor() as $reservation) {
+    //     echo $reservation->id;
+    // } // takes faster than get() and chunk() but uses more memory than chunk() (not as much as get() method)
+
+    // dump($result);
 
     return view('welcome');
 });
