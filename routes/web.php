@@ -16,22 +16,17 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 
-    // $affected = DB::table('rooms')
-    //           ->where('id', 1)
-    //           ->update(['price' => 222]);
-
-
-    // $affected = DB::table('users')
-    //           ->where('id', 1)
-    //           ->update(['meta->settings->site_language' => 'es']);
-
-    // $affected = DB::table('rooms')->increment('price', 20);
-    $affected = DB::table('rooms')->decrement('price', 10, ['description' => 'new description']);
+    // DB::table('rooms')->where('id', '>', 10)->delete();
+    // DB::table('rooms')->delete();
+    // DB::table('rooms')->insert(['room_number'=>1, 'room_size'=>2, 'price'=>100, 'description'=>'desc']);
+    // DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+    // DB::table('rooms')->truncate();
+    // DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
     $result = DB::table('rooms')
                 ->get();
 
-    dump($result, $affected);
+    dump($result);
 
     return view('welcome');
 });
