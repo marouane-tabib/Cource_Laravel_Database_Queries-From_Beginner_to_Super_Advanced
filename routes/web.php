@@ -19,43 +19,22 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 
+    // $result = User::find(1); // [1,2,3] does not work with Query Builder
+    // $result = User::where('email','like', '%@%')->first();
 
-    // $result = DB::table('rooms')
-    //             ->where('room_size',3)
-    //             ->get();
+    // $result = User::where('email','like', '%@email2.com')->firstOr(function() {
+    //         User::where('id',1)->update(['email'=>'email@email2.com']);
+    // });
 
-    // $result = Room::where('room_size',3)
-    //             ->get();
+    // $result = User::findOrFail(100); // firstOrFail also possible
 
-    // $result = Room::get(); // all()
-    // $result = Room::where('price', '<', 400)
-    //                 ->get();
+    // $result = Comment::max('rating'); //  count, max, min, avg, sum 
 
-    // $result = User::select('name','email')
-    //     ->addSelect(['worst_rating' => Comment::select('rating')
-    //     ->whereColumn('user_id', 'users.id')
-    //     ->orderBy('rating', 'asc')
-    //     ->limit(1)
-    //     ])->get()->toArray();
+    // $result = Comment::all();
+    // $result = Comment::withoutGlobalScope('rating')->get();
+    $result = Comment::rating(1)->get();
 
-    // $result = User::orderByDesc(  // asc default without 'Desc' part
-    //     Reservation::select('check_in')
-    //         ->whereColumn('user_id','users.id')
-    //         ->orderBy('check_in','desc') // asc default without argument
-    //         ->limit(1)
-    //     )->select('id','name')->get()->toArray();
-
-    $result = Reservation::chunk(2, function ($reservations) {
-        foreach ($reservations as $reservation) {
-            echo $reservation->id;
-        }
-    }); // uses less memory than get() and cursor() but takes longer than get() and cursor(), the bigger chunk set is the less time a query takes but memory usage increases
-
-    // foreach (Room::cursor() as $reservation) {
-    //     echo $reservation->id;
-    // } // takes faster than get() and chunk() but uses more memory than chunk() (not as much as get() method)
-
-    // dump($result);
+    dump($result);
 
     return view('welcome');
 });
