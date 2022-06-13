@@ -19,17 +19,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 
-    // $comment = new Comment();
+    // $comment = Comment::find(1);
     // $comment->user_id = 1;
     // $comment->rating = 5;
-    // $comment->content = 'comment content';
+    // $comment->content = 'comment content updated';
     // $result = $comment->save(); 
 
-    $result = Comment::create([
-        'user_id' => 1,
-        'rating' => 5,
-        'content' => 'comment content',
-    ]);
+    $result = Room::where('price', '<', 200)
+          ->update(['price' => 250]);
 
     dump($result);
 
