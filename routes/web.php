@@ -19,20 +19,21 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 
-    // $result = User::find(1); // [1,2,3] does not work with Query Builder
-    // $result = User::where('email','like', '%@%')->first();
+  
+    // $result = Comment::all()->toArray();
+    // $result = Comment::all()->count();
+    // $result = Comment::all()->toJson();
+    
+    $comments = Comment::all();
 
-    // $result = User::where('email','like', '%@email2.com')->firstOr(function() {
-    //         User::where('id',1)->update(['email'=>'email@email2.com']);
+    $result = $comments->reject(function ($comment) {
+        return $comment->rating < 3;
+    });
+    // ->map(function ($comment) {
+    //     return $comment->content;
     // });
 
-    // $result = User::findOrFail(100); // firstOrFail also possible
-
-    // $result = Comment::max('rating'); //  count, max, min, avg, sum 
-
-    // $result = Comment::all();
-    // $result = Comment::withoutGlobalScope('rating')->get();
-    $result = Comment::rating(1)->get();
+    $result = $comments->diff($result);
 
     dump($result);
 
