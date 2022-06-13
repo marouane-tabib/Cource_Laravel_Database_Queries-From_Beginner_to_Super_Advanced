@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Builder;
 
 class Comment extends Model
 {
+    // protected $fillable = ['rating', 'content', 'user_id'];
+    protected $guarded = [];
+
     // protected static function booted()
     // {
     //     static::addGlobalScope('rating', function (Builder $builder) {

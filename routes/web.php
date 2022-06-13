@@ -19,21 +19,17 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 
-  
-    // $result = Comment::all()->toArray();
-    // $result = Comment::all()->count();
-    // $result = Comment::all()->toJson();
-    
-    $comments = Comment::all();
+    // $comment = new Comment();
+    // $comment->user_id = 1;
+    // $comment->rating = 5;
+    // $comment->content = 'comment content';
+    // $result = $comment->save(); 
 
-    $result = $comments->reject(function ($comment) {
-        return $comment->rating < 3;
-    });
-    // ->map(function ($comment) {
-    //     return $comment->content;
-    // });
-
-    $result = $comments->diff($result);
+    $result = Comment::create([
+        'user_id' => 1,
+        'rating' => 5,
+        'content' => 'comment content',
+    ]);
 
     dump($result);
 
