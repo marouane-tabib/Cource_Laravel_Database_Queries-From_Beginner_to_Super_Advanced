@@ -19,14 +19,17 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 
-    // $comment = Comment::find(1);
-    // $comment->user_id = 1;
-    // $comment->rating = 5;
-    // $comment->content = 'comment content updated';
-    // $result = $comment->save(); 
+    // $flight = Comment::find(1);
+    // $result = $flight->delete();
 
-    $result = Room::where('price', '<', 200)
-          ->update(['price' => 250]);
+    // $result = Comment::destroy([1]);
+
+    // $result = Comment::where('rating', 1)->delete();
+
+    // $result = Comment::withTrashed()->get(); // onlyTrashed()
+    // $result = Comment::withTrashed()->restore(); // onlyTrashed()
+
+    $result = Comment::where('rating', 1)->forceDelete();
 
     dump($result);
 
