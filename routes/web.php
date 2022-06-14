@@ -19,9 +19,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 
-    $result = Comment::all();
+    $result = Comment::find(1);
 
-    dump($result);
+    // dump($result->rating);
+    dump($result->who_what);
 
     return view('welcome');
 });
