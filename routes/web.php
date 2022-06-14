@@ -19,17 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 
-    // $flight = Comment::find(1);
-    // $result = $flight->delete();
-
-    // $result = Comment::destroy([1]);
-
-    // $result = Comment::where('rating', 1)->delete();
-
-    // $result = Comment::withTrashed()->get(); // onlyTrashed()
-    // $result = Comment::withTrashed()->restore(); // onlyTrashed()
-
-    $result = Comment::where('rating', 1)->forceDelete();
+    $result = Comment::all();
 
     dump($result);
 
